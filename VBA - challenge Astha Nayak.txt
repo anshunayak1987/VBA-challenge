@@ -1,0 +1,161 @@
+Sub MultiYearStock()
+
+
+  ' Set an initial variable for holding the ticker
+  Dim Ticker As String
+  ' Set an initial variable for holding the yearlyChange
+  Dim YearlyChange As Double
+  ' Set an initial varible for holding the YearopenPrice
+  Dim YearOpenPrice As Double
+  'Set an initial varible for holding the YearClosePrice
+  Dim YearClosePrice As Double
+  'Set an initial varible for holding the PercentChange
+  Dim PercentChange As Double
+  ' Set an initial variable for holding the Stock_volume
+  Dim Stock_volume As Double
+  ' Set an initial variable for holding the Summary_Table_Row
+  Dim Summary_Table_Row As Integer
+  '**************************************
+  ' Creating variables for Bonuse excecies
+  '**************************************
+  'Set intial variable for holding Greatest percentage increase
+  Dim Grt_Prt_Inc As Double
+  'Set intial variables for holding Greatest Percentage decrease
+  Dim Grt_Prt_Dec As Double
+  'Set intial variable for holding Greatest Total Volume
+  Dim Grt_Tot_Vol As Double
+  'Set intial Variable for holding Ticker of Greatest persentage increase
+  Dim Grt_Prt_Inc_Tic As String
+  'Set intial Variable for holding Ticker of Greatest persentage Decrease
+  Dim Grt_Prt_Dec_Tic As String
+  'Set intial Variable for holding Ticker of Greatest persentage Total Volume
+  Dim Grt_Tot_Vol_Tic As String
+  '**************************************
+  'End creating Variable for Bonuse excercies
+   '**************************************
+  Stock_volume = 0
+
+     Summary_Table_Row = 2
+   
+   'Apply  formula for getting the number of row
+  
+     LastRow = Cells(Rows.Count, 1).End(xlUp).Row
+   'MsgBox (LastRow)
+   'Print value Ticker coloum I
+      Range("I" & 1).Value = "Ticker"
+   'Print value Yearly Change colum J
+      Range("J" & 1).Value = "Yearly Change"
+   'Print value Percent Change colum K
+      Range("K" & 1).Value = "Percent Change"
+   'Print value Total Stock Volume colum L
+      Range("L" & 1).Value = "Total Stock Volume"
+   'Print value in colum Q
+      Range("Q" & 1).Value = "Value"
+   'Print value Ticker Colum P
+      Range("P" & 1).Value = "Ticker"
+    'Print value Greatest % increase colum o
+      Range("o" & 2).Value = "Greatest % Increase"
+    'Print value Greatest % Decrease colum o
+      Range("o" & 3).Value = "Greatest % Decrease"
+    'Print value Greatest Total Volume colum o
+      Range("o" & 4).Value = "Greatest Total Volume"
+   
+' Loop through all Ticker value
+ For I = 2 To LastRow
+   'Using If statment
+  'Getting the Year open price for Ticker
+    If Cells(I - 1, 1).Value <> Cells(I, 1) Then
+        YearOpenPrice = Cells(I, 3).Value
+    End If
+    
+    ' Checking Yearly Change
+ If Cells(I + 1, 1).Value <> Cells(I, 1).Value Then
+        YearClosePrice = Cells(I, 6).Value
+        YearlyChange = YearClosePrice - YearOpenPrice
+        PercentChange = YearlyChange / YearOpenPrice
+        
+     '************************************************************************
+    'calculating the gretest increase ,greastesd decrease for bonus excercise
+    '************************************************************************
+    If IsEmpty(Grt_Prt_Inc) Then
+        Grt_Prt_Inc = PercentChange
+        Grt_Prt_Inc_Tic = Cells(I, 1).Value
+    End If
+    
+    If Grt_Prt_Inc < PercentChange Then
+        Grt_Prt_Inc = PercentChange
+        Grt_Prt_Inc_Tic = Cells(I, 1).Value
+    End If
+    
+      If IsEmpty(Grt_Prt_Dec) Then
+        Grt_Prt_Dec = PercentChange
+        Grt_Prt_Dec_Tic = Cells(I, 1).Value
+    End If
+    
+    If Grt_Prt_Dec > PercentChange Then
+        Grt_Prt_Dec = PercentChange
+        Grt_Prt_Dec_Tic = Cells(I, 1).Value
+    End If
+   '************************************************************************
+    
+      ' Set the Brand name
+      Ticker = Cells(I, 1).Value
+
+      ' Add to the Brand Total
+      Stock_volume = Stock_volume + Cells(I, 6).Value
+     '************************************************************************
+    'calculating the gretest Stock Volume for bonus excercise
+    '************************************************************************
+     If IsEmpty(Grt_Tot_Vol) Then
+        Grt_Tot_Vol = Stock_volume
+        Grt_Tot_Vol_Tic = Cells(I, 1).Value
+    End If
+    
+    If Grt_Tot_Vol < Stock_volume Then
+        Grt_Tot_Vol = Stock_volume
+        Grt_Tot_Vol_Tic = Cells(I, 1).Value
+    End If
+    
+    '************************************************************************
+      ' Print Ticker value in the Summary Table
+      Range("I" & Summary_Table_Row).Value = Ticker
+
+      ' Print the data for summary
+      Range("L" & Summary_Table_Row).Value = Stock_volume
+      Range("J" & Summary_Table_Row).Value = YearlyChange
+      Range("K" & Summary_Table_Row).Value = PercentChange
+      ' Add one to the summary table row
+      Summary_Table_Row = Summary_Table_Row + 1
+      
+      ' Reset the Brand Total
+      Stock_volume = 0
+
+    ' If the cell immediately following a row is the same brand...
+ Else
+
+      ' Add to the Brand Total
+      Stock_volume = Stock_volume + Cells(I, 7).Value
+
+End If
+
+  Next I
+    '************************************************************************
+    'Printing the values for the bonus excercies
+    '************************************************************************
+  Range("P" & 2).Value = Grt_Prt_Inc_Tic
+  Range("Q" & 2).Value = Grt_Prt_Inc
+ 
+  Range("P" & 3).Value = Grt_Prt_Dec_Tic
+  Range("Q" & 3).Value = Grt_Prt_Dec
+  
+  Range("P" & 4).Value = Grt_Tot_Vol_Tic
+  Range("Q" & 4).Value = Grt_Tot_Vol
+  '************************************************************************
+End Sub
+'Creating the sub routine for clearing the content created by above sub routine
+Sub Reset()
+ Range("I1:Q1048576").Select
+    Selection.ClearContents
+End Sub
+
+
