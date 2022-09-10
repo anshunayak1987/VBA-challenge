@@ -1,0 +1,12 @@
+I have created three sub routines :
+1.	MultiYearStock() – This sub routine creates the summary including the bonus summary.
+2.	Reset() -   This sub routine clears the summary created by “MultiYearStock()” sub routine.
+3.	WorksheetLoop() – This sub routine has the exactly same functionality as “MultiYearStock()” but it loops through all  the  sheets.
+Submission files 
+1.	Multiple_year_stock_data.xlsm –
+a.	This file have all the working of assignment including the bonus one. 
+b.	The above three sub routine are present in module 1. 
+c.	In each sheet I have created a button for sub routine multiyear stock (Button – summary) and sub routine reset (Button – reset)
+d.	In sheet one I have created a button summary all to run the sub routine “WorksheetLoop()”.
+2.	VBA - challenge Astha Nayak.txt – This file have script for sub routine “MultiYearStock()” and “Reset()”.
+3.	VBA - challenge - loop through all year sheets Astha Nayak.txt -This file have script for sub routine “WorksheetLoop()”.
